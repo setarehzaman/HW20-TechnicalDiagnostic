@@ -1,0 +1,53 @@
+﻿@page
+@model App.EndPoints.RazorPages.Pages.CreateRequestModel
+@{
+    ViewData["Title"] = "Submit Request";
+}
+
+<h2>Submit Request</h2>
+
+@if (!string.IsNullOrEmpty(Model.ResultMessage))
+{
+    <div class="alert @(Model.IsSuccess ? "alert-success" : "alert-danger")">
+        @Model.ResultMessage
+    </div>
+}
+
+<form method="post">
+    <div>
+        <label for="PlateNumber">Plate Number:</label>
+        <input type="text" id="PlateNumber" name="Request.PlateNumber" value="@Model.Request.PlateNumber" />
+        <span asp-validation-for="Request.PlateNumber" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="MobileNumber">Mobile Number:</label>
+        <input type="text" id="MobileNumber" name="Request.MobileNumber" value="@Model.Request.MobileNumber" />
+        <span asp-validation-for="Request.MobileNumber" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="OwnerCode">National Code:</label>
+        <input type="text" id="OwnerCode" name="Request.OwnerCode" value="@Model.Request.OwnerCode" />
+        <span asp-validation-for="Request.OwnerCode" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Address">Address:</label>
+        <textarea id="Address" name="Request.Address">@Model.Request.Address</textarea>
+        <span asp-validation-for="Request.Address" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="VehicleId">Select Vehicle:</label>
+        <select id="VehicleId" name="Request.VehicleId">
+            <option value="">-- Select Vehicle --</option>
+@*             @foreach (var vehicle in Model.Models)
+            {
+                <option value="@vehicle.Id">@vehicle.Brand - @vehicle.Model.Name - @vehicle.PlateNumber</option>
+            } *@
+        </select>
+        <span asp-validation-for="Request.VehicleId" class="text-danger"></span>
+    </div>
+    <button type="submit">Submit Request</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
