@@ -1,3 +1,6 @@
+
+
+
 /* Light Pink Theme */
 body.bg-light-pink {
     background-color: #ffe4e1; /* Light pink background */
@@ -16,7 +19,7 @@ h1.text-cute {
     border-color: #ff9ebd;
 }
 
-    .btn-primary:hover {
+     .btn-primary:hover {
         background-color: #ff85af;
         border-color: #ff85af;
     }

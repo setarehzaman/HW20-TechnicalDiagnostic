@@ -1,4 +1,4 @@
-using App.Domain.Core.Contracts.AppService;
+﻿using App.Domain.Core.Contracts.AppService;
 using App.Domain.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,22 +12,23 @@ namespace App.EndPoints.RazorPages.Pages
         public void OnGet()
         {
         } 
-        public IActionResult OnPost(string Name)
+        public IActionResult OnPost(string name)
         {
-            if (string.IsNullOrEmpty(Name))
+            if (string.IsNullOrEmpty(name))
             {
-                ResultMessage = "??? ??? ????????? ???? ????";
+                ResultMessage = "باید حتما نام را وارد کنید";
                 IsSuccess = false;
                 return Page();
             }
 
-            var vehicleModel = new VehicleModel { Name = Name };
+            var vehicleModel = new VehicleModel { Name = name };
 
             var result = vehicleModelApp.CreateVehicleModel(vehicleModel);
 
             if (result.IsSuccess)
             {
                 ResultMessage = result.Message;
+                IsSuccess = result.IsSuccess;
                 return Page();
             }
             ResultMessage = result.Message; 
