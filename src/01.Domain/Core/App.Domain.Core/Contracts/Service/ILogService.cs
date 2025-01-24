@@ -12,6 +12,6 @@ namespace App.Domain.Core.Contracts.Service
     {
         Result AddLog(Log log);
         List<Log> GetLogList();
-        Result GetLog(int id);
+        Log GetLog(int id);
     }
 }

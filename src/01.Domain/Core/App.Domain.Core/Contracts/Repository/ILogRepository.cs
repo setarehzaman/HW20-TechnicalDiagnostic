@@ -1,10 +1,5 @@
 ﻿using App.Domain.Core.Entities;
 using App.Domain.Core.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App.Domain.Core.Contracts.Repository
 {
@@ -12,7 +7,7 @@ namespace App.Domain.Core.Contracts.Repository
     {
         Result AddLog(Log log);
         List<Log> GetLogList();
-        Result GetLog(int id);
+        Log GetLog(int id);
     }
 
 }

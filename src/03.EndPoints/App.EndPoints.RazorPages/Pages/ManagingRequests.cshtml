@@ -1,0 +1,63 @@
+﻿@page
+@using App.Domain.Core.enums
+@model App.EndPoints.RazorPages.Pages.ManagingRequestsModel
+@{
+}
+<h1>مدیریت درخواست‌ها</h1>
+
+@if (!string.IsNullOrEmpty(Model.ResultMessage))
+{
+    <div class="alert @(Model.IsSuccess ? "alert-success" : "alert-danger")">
+        @Model.ResultMessage
+    </div>
+}
+
+<h2>لیست درخواست‌ها</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>شماره پلاک</th>
+            <th>شماره تماس</th>
+            <th>کد ملی</th>
+            <th>آدرس</th>
+            <th>وضعیت درخواست</th>
+            <th>تاریخ ثبت</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model.Requests)
+        {
+            <tr>
+                <td>@request.PlateNumber</td>
+                <td>@request.MobileNumber</td>
+                <td>@request.OwnerCode</td>
+                <td>@request.Address</td>
+                <td>@request.Status</td>
+                <td>@request.DateRequested.ToString("yyyy/MM/dd")</td>
+                <td>
+                    <form method="post" asp-page-handler="UpdateStatus">
+                        <input type="hidden" name="RequestId" value="@request.Id" />
+                        <select name="NewStatus" class="form-select">
+                            @foreach (var status in Enum.GetValues(typeof(RequestStatusEnum)).Cast<RequestStatusEnum>())
+                            {
+                                <option value="@status">
+                                    @if (request.Status == status)
+                                    {
+                                        @status
+                                    }
+                                    @status.ToString()
+                                </option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary">بروزرسانی وضعیت</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="mt-3">
+    <a href="/AdminMenu" class="btn btn-secondary btn-lg">بازگشت به منو</a>
+</div>

@@ -13,8 +13,7 @@ namespace App.Domain.Core.Contracts.Service
         Request GetById(int id);
         List<Request> GetAll();
         Result Add(Request request);
-        Result Delete(int id);
-        Result Update(Request request);
+        bool Update(Request request);
         List<Request> GetRequestsByDate(DateTime date);
     }
 }

@@ -14,39 +14,73 @@
 }
 
 <form method="post">
-    <div>
-        <label for="PlateNumber">Plate Number:</label>
-        <input type="text" id="PlateNumber" name="Request.PlateNumber" value="@Model.Request.PlateNumber" />
+    <div class="form-group">
+        <label asp-for="Request.PlateNumber">شماره پلاک</label>
+        <input asp-for="Request.PlateNumber" class="form-control" />
         <span asp-validation-for="Request.PlateNumber" class="text-danger"></span>
     </div>
-    <div>
-        <label for="MobileNumber">Mobile Number:</label>
-        <input type="text" id="MobileNumber" name="Request.MobileNumber" value="@Model.Request.MobileNumber" />
+
+    <div class="form-group">
+        <label asp-for="Request.MobileNumber">شماره موبایل</label>
+        <input asp-for="Request.MobileNumber" class="form-control" />
         <span asp-validation-for="Request.MobileNumber" class="text-danger"></span>
     </div>
-    <div>
-        <label for="OwnerCode">National Code:</label>
-        <input type="text" id="OwnerCode" name="Request.OwnerCode" value="@Model.Request.OwnerCode" />
+
+    <div class="form-group">
+        <label asp-for="Request.OwnerCode">کد ملی</label>
+        <input asp-for="Request.OwnerCode" class="form-control" />
         <span asp-validation-for="Request.OwnerCode" class="text-danger"></span>
     </div>
-    <div>
-        <label for="Address">Address:</label>
-        <textarea id="Address" name="Request.Address">@Model.Request.Address</textarea>
+
+    <div class="form-group">
+        <label asp-for="Request.Address">آدرس</label>
+        <textarea asp-for="Request.Address" class="form-control"></textarea>
         <span asp-validation-for="Request.Address" class="text-danger"></span>
     </div>
-    <div>
-        <label for="VehicleId">Select Vehicle:</label>
-        <select id="VehicleId" name="Request.VehicleId">
-            <option value="">-- Select Vehicle --</option>
-@*             @foreach (var vehicle in Model.Models)
+
+    <div class="form-group">
+        <label for="VehicleModelId">خودرو</label>
+        <select asp-for="Request.VehicleModelId" class="form-control">
+            <option value="">یک خودرو انتخاب کنید</option>
+            @foreach (var models in Model.Models)
             {
-                <option value="@vehicle.Id">@vehicle.Brand - @vehicle.Model.Name - @vehicle.PlateNumber</option>
-            } *@
+                <option value="@models.Id">
+                    @models.Name
+                </option>
+            }
         </select>
-        <span asp-validation-for="Request.VehicleId" class="text-danger"></span>
+        <span asp-validation-for="Request.VehicleModelId" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Request.VehicleCreationYear">سال ساخت</label>
+            <select asp-for="Request.VehicleCreationYear" class="form-control">
+                <option value="">انتخاب کنید</option>
+                @for (int year = 2025; year >= 1990; year--)
+                {
+                    <option value="@year">@year</option>
+                }
+            </select>
+            <span asp-validation-for="Request.VehicleCreationYear" class="text-danger"></span>
+        </div>
     </div>
-    <button type="submit">Submit Request</button>
+    <div class="form-group">
+        <label asp-for="Request.DateRequested">تاریخ درخواست</label>
+        <input asp-for="Request.DateRequested" type="date" class="form-control" />
+        <span asp-validation-for="Request.DateRequested" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Request.Brand">شرکت سازنده</label>
+        <select asp-for="Request.Brand" class="form-control">
+            <option value="">انتخاب کنید</option>
+            <option value="ایران خودرو">ایران خودرو</option>
+            <option value="سایپا">سایپا</option>
+        </select>
+        <span asp-validation-for="Request.Brand" class="text-danger"></span>
+    </div>
+
+
+    <button type="submit" class="btn btn-success mt-lg-3">ارسال درخواست</button>
 </form>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

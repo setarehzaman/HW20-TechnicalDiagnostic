@@ -1,0 +1,19 @@
+﻿@page
+@model App.EndPoints.RazorPages.Pages.AdminMenuModel
+@{
+    ViewData["Title"] = "منوی مدیریت";
+}
+
+<h2>منوی مدیریت</h2>
+
+<div>
+    <a href="/ManagingRequests" class="btn btn-primary btn-lg">مدیریت درخواست ها</a>
+</div>
+<div class="mt-3">
+    <a href="/ModelManager" class="btn btn-primary btn-lg">مدیریت مدل خودروها</a>
+</div>
+<div class="mt-5">
+    <form method="post" asp-page-handler="Logout">
+        <button type="submit" class="btn btn-danger btn-lg">خروج</button>
+    </form>
+</div>

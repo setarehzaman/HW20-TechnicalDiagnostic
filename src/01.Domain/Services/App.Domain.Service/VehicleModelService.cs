@@ -1,37 +1,34 @@
-﻿
-
-using App.Domain.Core.Contracts.Repository;
+﻿using App.Domain.Core.Contracts.Repository;
 using App.Domain.Core.Contracts.Service;
 using App.Domain.Core.Entities;
-using App.Domain.Core.Entities.Base;
 
 namespace App.Domain.Service
 {
     public class VehicleModelService(IVehicleModelRepository modelRepository) : IVehicleModelService
     {
-        public Result CreateVehicleModel(VehicleModel vehicleModel)
+        public bool Create(VehicleModel vehicleModel)
         {
-            return modelRepository.CreateVehicleModel(vehicleModel);
+            return modelRepository.Create(vehicleModel);    
         }
 
-        public Result DeleteVehicleModel(int id)
+        public bool Delete(int id)
         {
-            return modelRepository.DeleteVehicleModel(id);
+            return modelRepository.Delete(id);
         }
 
-        public List<VehicleModel> GetAllVehicleModels()
+        public List<VehicleModel> GetAll()
         {
-            return modelRepository.GetAllVehicleModels();
+            return modelRepository.GetAll();
         }
 
-        public VehicleModel GetVehicleModel(int id)
+        public VehicleModel GetById(int id)
         {
-            return modelRepository.GetVehicleModel(id);
+            return modelRepository.GetById(id);
         }
 
-        public Result UpdateVehicleModel(VehicleModel vehicleModel)
+        public bool Update(VehicleModel vehicleModel)
         {
-            return modelRepository.UpdateVehicleModel(vehicleModel);    
+            return modelRepository.Update(vehicleModel);        
         }
     }
 }

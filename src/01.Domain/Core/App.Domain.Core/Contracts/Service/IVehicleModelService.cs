@@ -6,10 +6,10 @@ namespace App.Domain.Core.Contracts.Service
 {
     public interface IVehicleModelService
     {
-        VehicleModel GetVehicleModel(int id);
-        List<VehicleModel> GetAllVehicleModels();
-        Result CreateVehicleModel(VehicleModel vehicleModel);
-        Result UpdateVehicleModel(VehicleModel vehicleModel);
-        Result DeleteVehicleModel(int id);
+        VehicleModel GetById(int id);
+        List<VehicleModel> GetAll();
+        bool Create(VehicleModel vehicleModel);
+        bool Update(VehicleModel vehicleModel);
+        bool Delete(int id);
     }
 }

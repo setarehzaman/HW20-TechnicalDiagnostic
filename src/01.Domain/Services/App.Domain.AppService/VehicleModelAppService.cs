@@ -9,27 +9,48 @@ namespace App.Domain.AppService
     {
         public Result CreateVehicleModel(VehicleModel vehicleModel)
         {
-            return modelService.CreateVehicleModel(vehicleModel);   
+            var result = modelService.Create(vehicleModel);
+            if (result)
+            {
+                return new Result { IsSuccess = true, Message = "با موفقیت ثبت شد" };
+            }
+            return new Result { IsSuccess = false, Message = "عملیات با خطا مواجه شد" };
         }
 
         public Result DeleteVehicleModel(int id)
         {
-            return modelService.DeleteVehicleModel(id);
-        }
+            var model = modelService.GetById(id);
+            if (model is null) return new Result { IsSuccess = false, Message = "مدلی با این شناسه پیدا نشد" };
 
+            var result = modelService.Delete(id);
+            if (result)
+            {
+                return new Result { IsSuccess = true, Message = "با موفقیت حذف شد" };
+            }
+            return new Result { IsSuccess = false, Message = "عملیات با خطا مواجه شد" };
+
+        }
         public List<VehicleModel> GetAllVehicleModels()
         {
-            return modelService.GetAllVehicleModels();
+            return modelService.GetAll();
         }
-
         public VehicleModel GetVehicleModel(int id)
         {
-            return modelService.GetVehicleModel(id);
+            var model = modelService.GetById(id);
+            return model;
         }
-
         public Result UpdateVehicleModel(VehicleModel vehicleModel)
         {
-            return modelService.UpdateVehicleModel(vehicleModel);
+            var existingModel = modelService.GetById(vehicleModel.Id);
+                if (existingModel is null) return new Result { IsSuccess = false, Message = "مدلی با این شناسه پیدا نشد" };
+
+            var result = modelService.Update(vehicleModel);
+            if (result)
+            {
+                return new Result { IsSuccess = true, Message = "با موفقیت بروزرسانی شد" };
+            }
+            return new Result { IsSuccess = false, Message = "عملیات با خطا مواجه شد" };
+
         }
     }
 }

@@ -1,0 +1,42 @@
+﻿@page
+@model App.EndPoints.RazorPages.Pages.ModelManagerModel
+@{
+    ViewData["Title"] = "مدیریت مدل‌های خودرو";
+}
+<h1>مدیریت مدل‌های خودرو</h1>
+
+@if (!string.IsNullOrEmpty(Model.ResultMessage))
+{
+    <div class="alert @(Model.IsSuccess ? "alert-success" : "alert-danger")">
+        @Model.ResultMessage
+    </div>
+}
+
+<div class="mb-3">
+    <a asp-page="/CreateVehicleModel" class="btn btn-primary">ایجاد مدل جدید</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>شناسه</th>
+            <th>نام مدل</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var models in Model.VehicleModels)
+        {
+            <tr>
+                <td>@models.Id</td>
+                <td>@models.Name</td>
+                <td>
+                    <a asp-page="/UpdateVehicleModel" asp-route-id="@models.Id" class="btn btn-warning btn-sm">ویرایش</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@models.Id" class="d-inline">
+                        <button type="submit" class="btn btn-danger btn-sm">حذف</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

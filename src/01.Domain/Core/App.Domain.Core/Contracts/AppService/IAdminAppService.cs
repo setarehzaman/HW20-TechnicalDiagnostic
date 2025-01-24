@@ -12,11 +12,7 @@ namespace App.Domain.Core.Contracts.AppService
     {
         Result Login(string username, string password);
         Admin GetById(int id);
-
-        //List<Admin> GetAll();
-        //Result CreateAdmin(Admin admin);
-        //Result UpdateAdmin(Admin admin);
-        //Result DeleteAdmin(int id);
-
+        Admin GetByUsername(string username);
+        
     }
 }

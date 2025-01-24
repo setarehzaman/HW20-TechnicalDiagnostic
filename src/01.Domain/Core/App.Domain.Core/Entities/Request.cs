@@ -1,6 +1,4 @@
-﻿
-using App.Domain.Core.enums;
-using System.ComponentModel;
+﻿using App.Domain.Core.enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.Domain.Core.Entities
@@ -23,13 +21,12 @@ namespace App.Domain.Core.Entities
         [Required(ErrorMessage = "آدرس الزامی است.")]
         public string Address { get; set; }
         public DateTime DateRequested { get; set; }
-        public string Status { get; set; } // Pending, Approved, Rejected
-        public int VehicleId { get; set; }
-
-        #region Navigation 
-        public Vehicle Vehicle { get; set; }
-
-        #endregion
-
+        public RequestStatusEnum Status { get; set; } = RequestStatusEnum.Pending;  
+        [Required(ErrorMessage = "سال تولید خودرو الزامی است")]
+        public int VehicleCreationYear { get; set; }
+        [Required(ErrorMessage = "شرکت سازنده خودرو الزامی است")]
+        public string Brand { get; set; }
+        public int VehicleModelId  { get; set; }
+        public VehicleModel VehicleModel { get; set; }
     }
 }

@@ -1,0 +1,22 @@
+﻿@page "{id:int}"
+@model App.EndPoints.RazorPages.Pages.UpdateVehicleModelModel
+@{
+    ViewData["Title"] = "ویرایش مدل خودرو";
+}
+<h1>ویرایش مدل خودرو</h1>
+
+@if (!string.IsNullOrEmpty(Model.ResultMessage))
+{
+    <div class="alert @(Model.IsSuccess ? "alert-success" : "alert-danger")">
+        @Model.ResultMessage
+    </div>
+}
+
+<form method="post">
+    <div class="mb-3">
+        <label for="Name" class="form-label">نام مدل</label>
+        <input type="text" class="form-control" id="Name" name="Name" value="@Model.VehicleModel.Name" />
+    </div>
+    <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+    <a asp-page="/ModelManager" class="btn btn-secondary">بازگشت</a>
+</form>

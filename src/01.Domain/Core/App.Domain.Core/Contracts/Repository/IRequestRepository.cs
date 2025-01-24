@@ -1,6 +1,4 @@
 ﻿using App.Domain.Core.Entities;
-using App.Domain.Core.Entities.Base;
-
 
 namespace App.Domain.Core.Contracts.Repository
 {
@@ -8,8 +6,8 @@ namespace App.Domain.Core.Contracts.Repository
     {
         Request GetById(int id);
         List<Request> GetAll();
-        bool Add(Request request);
-        bool UpdateRequestStatus(int requestId, string status);
+        void Add(Request request);
+        bool Update(Request request);
         List<Request> GetRequestsByDate(DateTime date);
     }
 

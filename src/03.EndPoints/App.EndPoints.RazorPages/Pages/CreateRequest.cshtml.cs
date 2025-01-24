@@ -9,11 +9,11 @@ namespace App.EndPoints.RazorPages.Pages
     {
         [BindProperty]
         public Request Request { get; set; }
-
+        [BindProperty]
         public List<VehicleModel> Models { get; set; }
 
-        public string ResultMessage { get; private set; }
-        public bool IsSuccess { get; private set; }
+        public string ResultMessage { get; set; } = string.Empty;
+        public bool IsSuccess { get; set; } = false;
 
         public void OnGet()
         {
@@ -22,24 +22,11 @@ namespace App.EndPoints.RazorPages.Pages
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
-            {
-                Models = modelAppService.GetAllVehicleModels();
-                return Page();
-            }
-
             var result = requestAppService.SubmitRequest(Request);
             IsSuccess = result.IsSuccess;
             ResultMessage = result.Message;
 
-            if (!IsSuccess)
-            {
-                Models = modelAppService.GetAllVehicleModels();
-                return Page();
-            }
-
-            return RedirectToPage("RequestList");
+            return Page();
         }
     }
-
 }

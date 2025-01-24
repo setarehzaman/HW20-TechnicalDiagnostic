@@ -1,31 +1,28 @@
 ﻿using App.Domain.Core.Contracts.Repository;
 using App.Domain.Core.Entities;
-using App.Domain.Core.Entities.Base;
-
+using App.Domain.Core.enums;
 
 namespace App.Infrastructure.EFCore.Repositories
 {
     public class RequestRepository(AppDbContext context) : IRequestRepository
     {
 
-        public bool Add(Request request)
+        public void Add(Request request)
         {
-            context.Add(request);   
-            return context.SaveChanges() > 0;
+            context.Add(request);
+            context.SaveChanges();
         }
-        public bool UpdateRequestStatus(int requestId, string status)
-        {
-            var request = context.Requests.Find(requestId);
-            if (request == null) return false;
 
-            request.Status = status;
+        public bool Update(Request request)
+        {
+            context.Update(request);
             return context.SaveChanges() > 0;
         }
 
         public List<Request> GetRequestsByDate(DateTime date)
         {
             return context.Requests
-                           .Where(r => r.DateRequested.Date == date.Date)
+                           .Where(r => r.DateRequested.Date.Day == date.Date.Day)
                            .ToList();
         }
 

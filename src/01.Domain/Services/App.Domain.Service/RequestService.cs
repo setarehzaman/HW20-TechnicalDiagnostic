@@ -2,11 +2,6 @@
 using App.Domain.Core.Contracts.Service;
 using App.Domain.Core.Entities;
 using App.Domain.Core.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App.Domain.Service
 {
@@ -19,19 +14,14 @@ namespace App.Domain.Service
             return new Result { IsSuccess = true };
         }
 
-        public Result Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Request> GetAll()
         {
-            throw new NotImplementedException();
+            return requestRepository.GetAll();  
         }
 
         public Request GetById(int id)
         {
-            throw new NotImplementedException();
+            return requestRepository.GetById(id);   
         }
 
         public List<Request> GetRequestsByDate(DateTime date)
@@ -39,9 +29,9 @@ namespace App.Domain.Service
             return requestRepository.GetRequestsByDate(date);
         }
 
-        public Result Update(Request request)
+        public bool Update(Request request)
         {
-            throw new NotImplementedException();
+            return requestRepository.Update(request);
         }
     }
 }

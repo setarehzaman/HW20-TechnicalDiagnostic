@@ -10,6 +10,7 @@ namespace App.Domain.Core.Contracts.AppService
 {
     public interface IVehicleModelAppService
     {
+        //cw crud
         VehicleModel GetVehicleModel(int id);
         List<VehicleModel> GetAllVehicleModels();   
         Result CreateVehicleModel(VehicleModel vehicleModel);

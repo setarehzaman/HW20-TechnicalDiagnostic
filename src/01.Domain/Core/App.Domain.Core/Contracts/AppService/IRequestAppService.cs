@@ -13,6 +13,8 @@ namespace App.Domain.Core.Contracts.AppService
     public interface IRequestAppService
     {
         Result SubmitRequest(Request request);
-        
+        List<Request> GetAllRequestsOrderedByDate();
+        Request GetById(int id);
+        Result UpdateRequest(Request request);
     }
 }

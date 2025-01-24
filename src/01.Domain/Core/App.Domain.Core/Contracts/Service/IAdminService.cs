@@ -11,9 +11,6 @@ namespace App.Domain.Core.Contracts.Service
     {
         Admin? GetById(int id);
         Admin? GetByUsername(string username);
-        //bool Add(Admin user);
-        //bool Delete(int id);
-        //bool Update(Admin user);
-        //List<Admin> GetAll();
+
     }
 }

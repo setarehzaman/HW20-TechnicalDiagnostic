@@ -13,6 +13,11 @@ namespace App.Domain.AppService
             return adminService.GetById(id);
         }
 
+        public Admin GetByUsername(string username)
+        {
+            return adminService.GetByUsername(username);
+        }
+
         public Result Login(string username, string password)
         {
             var admin = adminService.GetByUsername(username);

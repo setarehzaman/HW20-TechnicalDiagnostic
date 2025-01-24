@@ -11,11 +11,6 @@ namespace App.Domain.Core.Contracts.Repository
     {
         Admin? GetById(int id);
         Admin? GetByUsername(string username);
-
-        //bool Add(Admin user);
-        //bool Delete(int id);
-        //bool Update(Admin user);
-        //List<Admin> GetAll();   
     }
 
 }
