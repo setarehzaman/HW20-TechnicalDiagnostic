@@ -1,14 +1,16 @@
-﻿using App.Domain.Core.Contracts.AppService;
+﻿
+using App.Domain.Core.Contracts.AppService;
 using App.Domain.Core.Contracts.Service;
 using App.Domain.Core.Entities;
 using App.Domain.Core.Entities.Base;
 using Microsoft.Extensions.Configuration;
 
+
 namespace App.Domain.AppService
 {
     public class RequestAppService(IRequestService requestService,
         IConfiguration configuration, ILogService logService) : IRequestAppService
-    {      
+    {
         public Result SubmitRequest(Request request)
         {
 
@@ -39,11 +41,11 @@ namespace App.Domain.AppService
             {
                 logService.AddLog(new Log
                 {
-                    Id = request.Id,    
-                    DateLogged = DateTime.Now,  
+                    Id = request.Id,
+                    DateLogged = DateTime.Now,
                     PlateNumber = request.PlateNumber
                 });
-                return new Result { IsSuccess = false, Message = "متاسفانه ماشین ماقبل سال 1398 در سامانه ثبت نمیشود"};
+                return new Result { IsSuccess = false, Message = "متاسفانه ماشین ماقبل سال 1398 در سامانه ثبت نمیشود" };
             }
 
 
@@ -62,7 +64,7 @@ namespace App.Domain.AppService
         }
         public Request GetById(int id)
         {
-            return requestService.GetById(id);   
+            return requestService.GetById(id);
         }
 
         public Result UpdateRequest(Request request)
