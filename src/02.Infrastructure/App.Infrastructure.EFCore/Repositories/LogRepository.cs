@@ -1,31 +1,28 @@
 ﻿using App.Domain.Core.Contracts.Repository;
 using App.Domain.Core.Entities;
 using App.Domain.Core.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace App.Infrastructure.EFCore.Repositories
 {
     public class LogRepository(AppDbContext context) : ILogRepository
     {
-        public Result AddLog(Log log)
+        public async Task<Result> AddLog(Log log, CancellationToken cancellationToken)
         {
-            context.Logs.Add(log);  
-            context.SaveChanges();  
+            await context.Logs.AddAsync(log, cancellationToken);  
+            await context.SaveChangesAsync(cancellationToken);  
             return new Result { IsSuccess = true };
         }
 
-        public Log GetLog(int id)
+        public async Task<Log> GetLog(int id, CancellationToken cancellationToken)
         {
-           return context.Logs.FirstOrDefault(l => l.Equals(id)); 
+           return await context.Logs.FirstOrDefaultAsync(l => l.Id == id, cancellationToken); 
         }
 
-        public List<Log> GetLogList()
+        public async Task<List<Log>> GetLogList(CancellationToken cancellationToken)
         {
-            return context.Logs.ToList();   
+            return await context.Logs.ToListAsync(cancellationToken);   
         }
     }
 }

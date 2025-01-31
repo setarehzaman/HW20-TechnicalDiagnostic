@@ -1,17 +1,13 @@
 ﻿using App.Domain.Core.Entities.Base;
 using App.Domain.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace App.Domain.Core.Contracts.Service
 {
     public interface ILogService
     {
-        Result AddLog(Log log);
-        List<Log> GetLogList();
-        Log GetLog(int id);
+        Task<Result> AddLog(Log log, CancellationToken cancellation);
+        Task<List<Log>> GetLogList(CancellationToken cancellation);
+        Task<Log> GetLog(int id, CancellationToken cancellation);
     }
 }

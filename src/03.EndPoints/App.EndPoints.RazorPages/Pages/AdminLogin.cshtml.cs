@@ -19,13 +19,13 @@ namespace App.EndPoints.RazorPages.Pages
         public void OnGet()
         {
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost(CancellationToken cancellation)
         {
             var result = adminAppService.Login(Username, Password);
 
             if (result.IsSuccess)
             {
-                InMemoryDb.OnlineUser = adminAppService.GetByUsername(Username);
+                InMemoryDb.OnlineUser = await adminAppService.GetByUsername(Username,cancellation);
                 return RedirectToPage("/AdminMenu");  
             }
             ErrorMessage = result.Message;

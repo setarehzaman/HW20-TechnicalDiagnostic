@@ -1,41 +1,47 @@
 ﻿using App.Domain.Core.Contracts.Repository;
 using App.Domain.Core.Entities;
-using App.Domain.Core.Entities.Base;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-
+using Microsoft.EntityFrameworkCore;
 namespace App.Infrastructure.EFCore.Repositories
 {
     public class VehicleModelRepository(AppDbContext context) : IVehicleModelRepository
     {
-        public bool Create(VehicleModel vehicleModel)
+        public async Task<bool> Create(VehicleModel vehicleModel, CancellationToken cancellationToken)
         {
-            context.Add(vehicleModel);
-            return context.SaveChanges() > 0;
+            await context.AddAsync(vehicleModel, cancellationToken);
+            var changes = await context.SaveChangesAsync(cancellationToken);
+            if(changes > 0) return true;
+            return false;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id, CancellationToken cancellationToken)
         {
-            var model = context.Models.First(x => x.Id == id);
+            var model = await context.Models.FirstOrDefaultAsync(x => x.Id == id);
             context.Remove(model);
-            return context.SaveChanges() > 0;  
+            var changes = await context.SaveChangesAsync(cancellationToken);
+            if (changes > 0) return true;
+            return false;
         }
 
-        public List<VehicleModel> GetAll()
+        public async Task<List<VehicleModel>> GetAll(CancellationToken cancellationToken)
         {
-            return context.Models.ToList();
+            return await context.Models.ToListAsync(cancellationToken);
         }
 
-        public VehicleModel GetById(int id)
+        public async Task<VehicleModel> GetById(int id, CancellationToken cancellationToken)
         {
-            return context.Models.FirstOrDefault(x => x.Id == id);  
+            return await context.Models.FirstOrDefaultAsync(x => x.Id == id);  
         }
 
-        public bool Update(VehicleModel vehicleModel)
+        public async Task<bool> Update(VehicleModel vehicleModel, CancellationToken cancellation)
         {
             var exisitingModel = context.Models.FirstOrDefault(x => x.Id == vehicleModel.Id);
+
             exisitingModel.Name = vehicleModel.Name;
             exisitingModel.Id = vehicleModel.Id;
-            return context.SaveChanges() > 0;
+
+            var changes = await context.SaveChangesAsync(cancellation);
+            if (changes > 0) return true;
+            return false;
         }
     }
 }

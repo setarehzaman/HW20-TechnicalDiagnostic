@@ -1,7 +1,6 @@
 ﻿using App.Domain.Core.Contracts.AppService;
 using App.Domain.Core.Dtos;
 using App.Domain.Core.Entities;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.Api.Controllers
@@ -12,26 +11,28 @@ namespace App.EndPoints.Api.Controllers
         IConfiguration configuration) : ControllerBase
     {
         [HttpGet("GetAll")] 
-        public List<VehicleModel> GetAllModels([FromHeader] string apiKey)
+        public async Task<List<VehicleModel>> GetAllModels([FromHeader] string apiKey,CancellationToken cancellationToken)
         {
             if (apiKey != configuration["AppSettings:ApiKey"])
                 throw new UnauthorizedAccessException("ای پی ای وارد شده معتبر نمی باشد");
 
-            var models = vehicleModelAppService.GetAllVehicleModels();
+            var models = await vehicleModelAppService.GetAllVehicleModels(cancellationToken);
             return models;
         }
 
         [HttpGet("GetById/{id}")]
-        public VehicleModel GetVehicleModelById([FromHeader] string apiKey, int id) 
+        public async Task<VehicleModel> GetVehicleModelById([FromHeader] string apiKey, int id,CancellationToken cancellation) 
         {
             if (apiKey != configuration["AppSettings:ApiKey"])
                 throw new UnauthorizedAccessException("ای پی ای وارد شده معتبر نمی باشد");
 
-            var model = vehicleModelAppService.GetVehicleModel(id);
+            var model = await vehicleModelAppService.GetVehicleModel(id,cancellation);
             return model;
         }
+
         [HttpPost("Create")]
-        public IActionResult CreateModel([FromHeader] string apiKey,[FromBody] VehicleModelDto vehicleModelDto)
+        public async Task<IActionResult> CreateModel([FromHeader] string apiKey,
+            [FromBody] VehicleModelDto vehicleModelDto , CancellationToken cancellation)
         {
             if (apiKey != configuration["AppSettings:ApiKey"])
                 throw new UnauthorizedAccessException("ای پی ای وارد شده معتبر نمی باشد");
@@ -39,22 +40,22 @@ namespace App.EndPoints.Api.Controllers
             var model = new VehicleModel();
             model.Name = vehicleModelDto.Name;
 
-            var result = vehicleModelAppService.CreateVehicleModel(model);
+            var result = await vehicleModelAppService.CreateVehicleModel(model, cancellation);
 
             return result.IsSuccess ? Ok(result.Message) : BadRequest(result.Message);
         }
 
         [HttpDelete("Delete/{id}")]
-        public IActionResult DeleteModel([FromHeader] string apiKey, int id) 
+        public async Task<IActionResult> DeleteModel([FromHeader] string apiKey, int id, CancellationToken cancellation) 
         {
             if (apiKey != configuration["AppSettings:ApiKey"])
                 throw new UnauthorizedAccessException("ای پی ای وارد شده معتبر نمی باشد");
-            var result = vehicleModelAppService.DeleteVehicleModel(id);
+            var result = await vehicleModelAppService.DeleteVehicleModel(id, cancellation);
             return result.IsSuccess ? Ok(result.Message) : BadRequest(result.Message);
         }
 
         [HttpPut("Update")]
-        public IActionResult UpdateModel([FromHeader] string apiKey,[FromBody] VehicleModelDto modeldto)
+        public async Task<IActionResult> UpdateModel([FromHeader] string apiKey,[FromBody] VehicleModelDto modeldto, CancellationToken cancellation)
         {
             if (apiKey != configuration["AppSettings:ApiKey"])
                 throw new UnauthorizedAccessException("ای پی ای وارد شده معتبر نمی باشد");
@@ -63,7 +64,7 @@ namespace App.EndPoints.Api.Controllers
             model.Name = modeldto.Name;
             model.Id = modeldto.Id; 
 
-            var existingModel = vehicleModelAppService.GetVehicleModel(model.Id);
+            var existingModel = await vehicleModelAppService.GetVehicleModel(model.Id, cancellation);
             if (existingModel == null)
             {
                 return NotFound();
@@ -71,7 +72,7 @@ namespace App.EndPoints.Api.Controllers
 
             existingModel.Name = model.Name;
 
-            var result = vehicleModelAppService.UpdateVehicleModel(existingModel);
+            var result = await vehicleModelAppService.UpdateVehicleModel(existingModel, cancellation);
             return result.IsSuccess ? Ok(result.Message) : BadRequest(result.Message);
         }
 

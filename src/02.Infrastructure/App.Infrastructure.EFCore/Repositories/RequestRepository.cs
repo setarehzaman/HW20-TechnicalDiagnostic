@@ -1,39 +1,40 @@
 ﻿using App.Domain.Core.Contracts.Repository;
 using App.Domain.Core.Entities;
-using App.Domain.Core.enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructure.EFCore.Repositories
 {
     public class RequestRepository(AppDbContext context) : IRequestRepository
     {
 
-        public void Add(Request request)
+        public async Task Add(Request request, CancellationToken cancellationToken)
         {
-            context.Add(request);
-            context.SaveChanges();
+            await context.AddAsync(request, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
         }
 
-        public bool Update(Request request)
+        public async Task<bool> Update(Request request, CancellationToken cancellationToken)
         {
             context.Update(request);
-            return context.SaveChanges() > 0;
+            var changes = await context.SaveChangesAsync(cancellationToken);
+            if (changes > 0) return true;
+            return false;
         }
-
-        public List<Request> GetRequestsByDate(DateTime date)
+        public async Task<List<Request>> GetRequestsByDate(DateTime date, CancellationToken cancellationToken)
         {
-            return context.Requests
+            return await context.Requests
                            .Where(r => r.DateRequested.Date.Day == date.Date.Day)
-                           .ToList();
+                           .ToListAsync(cancellationToken);
         }
 
-        public Request GetById(int id)
+        public async Task<Request> GetById(int id, CancellationToken cancellationToken)
         {
-            return context.Requests.FirstOrDefault(r => r.Id == id);
+            return await context.Requests.FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public List<Request> GetAll()
+        public async Task<List<Request>> GetAll(CancellationToken cancellationToken)
         {
-            return context.Requests.ToList();   
+            return await context.Requests.ToListAsync(cancellationToken);
         }
     }
 }

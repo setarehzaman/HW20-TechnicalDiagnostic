@@ -2,29 +2,22 @@
 using App.Domain.Core.Contracts.Service;
 using App.Domain.Core.Entities;
 using App.Domain.Core.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App.Domain.Service
 {
     public class LogService(ILogRepository logRepository) : ILogService
     {
-        public Result AddLog(Log log)
+        public async Task<Result> AddLog(Log log, CancellationToken cancellation)
         {
-            return logRepository.AddLog(log);
+            return await logRepository.AddLog(log, cancellation);
         }
-
-        public Log GetLog(int id)
+        public async Task<Log> GetLog(int id, CancellationToken cancellation)
         {
-            return logRepository.GetLog(id);
+            return await logRepository.GetLog(id, cancellation);
         }
-
-        public List<Log> GetLogList()
+        public async Task<List<Log>> GetLogList(CancellationToken cancellation)
         {
-            return logRepository.GetLogList();
+            return await logRepository.GetLogList(cancellation);
         }
     }
 }

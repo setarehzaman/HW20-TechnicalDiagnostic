@@ -10,19 +10,19 @@ namespace App.EndPoints.RazorPages.Pages
         public List<VehicleModel> VehicleModels { get; set; }
         public string ResultMessage { get; set; }
         public bool IsSuccess { get; set; }
-        public void OnGet()
+        public async Task OnGet(CancellationToken cancellation)
         {
-            VehicleModels = vehicleModelApp.GetAllVehicleModels();
+            VehicleModels = await vehicleModelApp.GetAllVehicleModels(cancellation);
         }
 
-        public IActionResult OnPostDelete(int id)
+        public async Task<IActionResult> OnPostDelete(int id, CancellationToken cancellation)
         {
-            var result = vehicleModelApp.DeleteVehicleModel(id);
+            var result = await vehicleModelApp.DeleteVehicleModel(id, cancellation);
 
             ResultMessage = result.Message;
             IsSuccess = result.IsSuccess;
 
-            VehicleModels = vehicleModelApp.GetAllVehicleModels();
+            VehicleModels = await vehicleModelApp.GetAllVehicleModels(cancellation);
             return Page();
         }
     }

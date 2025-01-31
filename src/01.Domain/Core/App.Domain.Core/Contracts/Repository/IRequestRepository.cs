@@ -4,11 +4,11 @@ namespace App.Domain.Core.Contracts.Repository
 {
     public interface IRequestRepository
     {
-        Request GetById(int id);
-        List<Request> GetAll();
-        void Add(Request request);
-        bool Update(Request request);
-        List<Request> GetRequestsByDate(DateTime date);
+        Task<Request> GetById(int id, CancellationToken cancellationToken);
+        Task<List<Request>> GetAll(CancellationToken cancellationToken);
+        Task Add(Request request, CancellationToken cancellation);
+        Task<bool> Update(Request request, CancellationToken cancellation);
+        Task<List<Request>> GetRequestsByDate(DateTime date , CancellationToken cancellation);
     }
 
 }

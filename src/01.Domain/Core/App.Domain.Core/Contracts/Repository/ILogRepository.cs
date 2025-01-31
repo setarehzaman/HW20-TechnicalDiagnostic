@@ -5,9 +5,9 @@ namespace App.Domain.Core.Contracts.Repository
 {
     public interface ILogRepository
     {
-        Result AddLog(Log log);
-        List<Log> GetLogList();
-        Log GetLog(int id);
+        Task<Result> AddLog(Log log, CancellationToken cancellation);
+        Task<List<Log>> GetLogList(CancellationToken cancellationToken);
+        Task<Log> GetLog(int id, CancellationToken cancellationToken);
     }
 
 }

@@ -6,10 +6,10 @@ namespace App.Domain.Core.Contracts.Repository
 {
     public interface IVehicleModelRepository
     {
-        VehicleModel GetById(int id);
-        List<VehicleModel> GetAll();
-        bool Create(VehicleModel vehicleModel);
-        bool Update(VehicleModel vehicleModel);
-        bool Delete(int id);
+        Task<VehicleModel> GetById(int id, CancellationToken cancellation);
+        Task<List<VehicleModel>> GetAll(CancellationToken cancellation);
+        Task<bool> Create(VehicleModel vehicleModel, CancellationToken cancellation);
+        Task<bool> Update(VehicleModel vehicleModel, CancellationToken cancellation);
+        Task<bool> Delete(int id, CancellationToken cancellation);
     }
 }

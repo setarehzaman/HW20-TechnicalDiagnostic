@@ -10,31 +10,31 @@ namespace App.EndPoints.Api.Controllers
     public class RequestController(IRequestAppService requestAppService) : ControllerBase
     {
         [HttpPost("Create")]
-        public string CreateRequest(CreateRequestDto requestDto)
+        public async Task<string> CreateRequest(CreateRequestDto requestDto, CancellationToken cancellation)
         {
             Request request = new Request();
             request.PlateNumber = requestDto.PlateNumber;
             request.VehicleCreationYear = requestDto.VehicleCreationYear;
             request.VehicleModelId = requestDto.VehicleModelId;
-            request.Address = requestDto.Address;   
-            request.Brand = requestDto.Brand;   
+            request.Address = requestDto.Address;
+            request.Brand = requestDto.Brand;
             request.MobileNumber = requestDto.MobileNumber;
             request.OwnerCode = requestDto.OwnerCode;
             request.Status = requestDto.Status;
-            request.DateRequested = requestDto.DateRequested;   
+            request.DateRequested = requestDto.DateRequested;
 
-            var result = requestAppService.SubmitRequest(request);
+            var result = await requestAppService.SubmitRequest(request, cancellation);
             if (result.IsSuccess)
             {
                 return "عملیات با موفقیت انجام شد";
             }
             return "خطا";
-            
+
         }
         [HttpGet("GetAll")]
-        public List<Request> GetAllRequests()
+        public async Task<List<Request>> GetAllRequests(CancellationToken cancellation)
         {
-            var result = requestAppService.GetAllRequestsOrderedByDate();
+            var result = await requestAppService.GetAllRequestsOrderedByDate(cancellation);
             return result;
         }
     }

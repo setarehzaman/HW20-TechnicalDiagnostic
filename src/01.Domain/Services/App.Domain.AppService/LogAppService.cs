@@ -8,19 +8,19 @@ namespace App.Domain.AppService
 {
     public class LogAppService(ILogService logService) : ILogAppService
     {
-        public Result AddLog(Log log)
+        public async Task<Result> AddLog(Log log, CancellationToken cancellationToken)
         {
-            return logService.AddLog(log);  
+            return await logService.AddLog(log, cancellationToken);  
         }
 
-        public Log GetLog(int id)
+        public async Task<Log> GetLog(int id, CancellationToken cancellationToken)
         {
-            return logService.GetLog(id);
+            return await logService.GetLog(id, cancellationToken);
         }
 
-        public List<Log> GetLogList()
+        public async Task<List<Log>> GetLogList(CancellationToken cancellationToken)
         {
-            return logService.GetLogList();
+            return await logService.GetLogList(cancellationToken);
         }
     }
 }

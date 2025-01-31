@@ -7,31 +7,31 @@ namespace App.Domain.Service
 {
     public class RequestService(IRequestRepository requestRepository) : IRequestService
     {
-        public Result Add(Request request)
+        public async Task<Result> Add(Request request, CancellationToken cancellation)
         {
             if (request == null) return new Result { IsSuccess = false };
-            requestRepository.Add(request);  
+            await requestRepository.Add(request, cancellation);
             return new Result { IsSuccess = true };
         }
 
-        public List<Request> GetAll()
+        public async Task<List<Request>> GetAll(CancellationToken cancellation)
         {
-            return requestRepository.GetAll();  
+            return await requestRepository.GetAll(cancellation);
         }
 
-        public Request GetById(int id)
+        public async Task<Request> GetById(int id, CancellationToken cancellation)
         {
-            return requestRepository.GetById(id);   
+            return await requestRepository.GetById(id, cancellation);
         }
 
-        public List<Request> GetRequestsByDate(DateTime date)
+        public async Task<List<Request>> GetRequestsByDate(DateTime date, CancellationToken cancellation)
         {
-            return requestRepository.GetRequestsByDate(date);
+            return await requestRepository.GetRequestsByDate(date, cancellation);
         }
 
-        public bool Update(Request request)
+        public async Task<bool> Update(Request request, CancellationToken cancellation)
         {
-            return requestRepository.Update(request);
+            return await requestRepository.Update(request, cancellation);
         }
     }
 }

@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace App.EndPoints.RazorPages.Pages
 {
     public class UpdateVehicleModelModel(IVehicleModelAppService vehicleModelApp) : PageModel
-    {      
+    {
         [BindProperty]
         public VehicleModel VehicleModel { get; set; }
         public string ResultMessage { get; set; }
         public bool IsSuccess { get; set; }
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGet(int id, CancellationToken cancellationToken)
         {
-            VehicleModel = vehicleModelApp.GetVehicleModel(id);
+            VehicleModel = await vehicleModelApp.GetVehicleModel(id, cancellationToken);
             if (VehicleModel == null)
             {
                 return RedirectToPage("/ModelManager");
@@ -21,9 +21,9 @@ namespace App.EndPoints.RazorPages.Pages
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost(CancellationToken cancellation)
         {
-            var result = vehicleModelApp.UpdateVehicleModel(VehicleModel);
+            var result = await vehicleModelApp.UpdateVehicleModel(VehicleModel, cancellation);
             if (result.IsSuccess)
             {
                 ResultMessage = result.Message;

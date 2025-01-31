@@ -3,22 +3,19 @@ using App.Domain.Core.Contracts.Service;
 using App.Domain.Core.Entities;
 using App.Domain.Core.Entities.Base;
 
-
 namespace App.Domain.AppService
 {
     public class AdminAppService(IAdminService adminService, IRequestService requestService) : IAdminAppService
     {
-        public Admin GetById(int id)
+        public async Task<Admin> GetById(int id, CancellationToken cancellation)
         {
-            return adminService.GetById(id);
+            return await adminService.GetById(id, cancellation);
         }
-
-        public Admin GetByUsername(string username)
+        public async Task<Admin> GetByUsername(string username, CancellationToken cancellation)
         {
-            return adminService.GetByUsername(username);
+            return await adminService.GetByUsername(username, cancellation);
         }
-
-        public Result Login(string username, string password)
+        public Result Login(string username, string password )
         {
             var admin = adminService.GetByUsername(username);
             if (admin == null) 
@@ -28,6 +25,5 @@ namespace App.Domain.AppService
             else
                 return new Result { IsSuccess = false , Message = "رمز عبور اشتباه است"};
         }
-
     }
 }

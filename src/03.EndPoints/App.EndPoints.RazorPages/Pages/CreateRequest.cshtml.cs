@@ -15,18 +15,18 @@ namespace App.EndPoints.RazorPages.Pages
         public string ResultMessage { get; set; } = string.Empty;
         public bool IsSuccess { get; set; } = false;
 
-        public void OnGet()
+        public async Task OnGet(CancellationToken cancellation)
         {
-            Models = modelAppService.GetAllVehicleModels(); 
+            Models = await modelAppService.GetAllVehicleModels(cancellation); 
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost(CancellationToken cancellation)
         {
-            var result = requestAppService.SubmitRequest(Request);
+            var result = await requestAppService.SubmitRequest(Request, cancellation);
             IsSuccess = result.IsSuccess;
             ResultMessage = result.Message;
 
-            return Page();
+            return RedirectToPage("/CreateRequest");
         }
     }
 }
