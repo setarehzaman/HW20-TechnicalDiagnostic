@@ -1,21 +1,19 @@
-using App.Infrastructure.InMemoryDb;
+using App.Domain.Core.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace App.EndPoints.RazorPages.Pages
 {
-    public class AdminMenuModel : PageModel
+    public class AdminMenuModel(SignInManager<User> signInManager) : PageModel
     {
         public void OnGet()
         {
         }
-        public IActionResult OnPostLogout()
+        public async Task<IActionResult> OnPostLogout()
         {
-            
-            InMemoryDb.OnlineUser = null;
-
-            return RedirectToPage("/AdminLogin");
+            await signInManager.SignOutAsync();
+            return RedirectToPage("/Login"); 
         }
-
     }
 }

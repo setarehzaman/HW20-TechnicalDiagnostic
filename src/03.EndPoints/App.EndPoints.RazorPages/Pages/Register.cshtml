@@ -1,0 +1,32 @@
+﻿@page
+@model App.EndPoints.RazorPages.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+<h2>ثبت نام</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="User.Name" class="control-label">نام</label>
+        <input asp-for="User.Name" class="form-control" />
+        <span asp-validation-for="User.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="User.UserName" class="control-label">نام کاربری</label>
+        <input asp-for="User.UserName" class="form-control" />
+        <span asp-validation-for="User.UserName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="User.Password" class="control-label">رمز عبور</label>
+        <input asp-for="User.Password" type="password" class="form-control" />
+        <span asp-validation-for="User.Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">ثبت نام</button>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger mt-2"></div>
+</form>

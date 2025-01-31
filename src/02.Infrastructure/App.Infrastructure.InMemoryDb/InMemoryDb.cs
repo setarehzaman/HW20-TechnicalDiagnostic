@@ -9,6 +9,6 @@ namespace App.Infrastructure.InMemoryDb
 {
     public static class InMemoryDb
     {
-        public static Admin OnlineUser { get; set; }
+        public static User OnlineUser { get; set; }
     }
 }

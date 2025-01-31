@@ -2,9 +2,12 @@ using App.Domain.AppService;
 using App.Domain.Core.Contracts.AppService;
 using App.Domain.Core.Contracts.Repository;
 using App.Domain.Core.Contracts.Service;
+using App.Domain.Core.Entities;
 using App.Domain.Service;
 using App.Infrastructure.EFCore;
 using App.Infrastructure.EFCore.Repositories;
+using Framework;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,14 +19,16 @@ builder.Services.AddRazorPages();
 builder.Services.AddRazorPages()
 .AddRazorRuntimeCompilation();
 
-
+#region Configuration
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
+#endregion
 
-builder.Services.AddScoped<IAdminRepository, AdminRepository>();  
-builder.Services.AddScoped<IAdminService, AdminService>();
-builder.Services.AddScoped<IAdminAppService , AdminAppService>();
+#region Register Services
+builder.Services.AddScoped<IUserRepository, UserRepository>();  
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserAppService , UserAppService>();
 
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();    
 builder.Services.AddScoped<IRequestService, RequestService>();    
@@ -37,7 +42,21 @@ builder.Services.AddScoped<IVehicleModelAppService, VehicleModelAppService>();
 builder.Services.AddScoped<ILogAppService, LogAppService>();
 builder.Services.AddScoped<ILogService, LogService>();
 builder.Services.AddScoped<ILogRepository, LogRepository>();
+#endregion
 
+
+builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+})
+    .AddRoles<IdentityRole<int>>()
+    .AddErrorDescriber<PersianIdentityErrorDescriber>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 var app = builder.Build();
 
